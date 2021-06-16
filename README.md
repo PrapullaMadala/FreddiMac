@@ -19,6 +19,26 @@ STEP3:(create script for actual requirement)
 
 STEP4: (create engine using SQLALCHEMY)
 
+# RDS -Instance
+
+1. You should have AWS Account
+2. Create RDS instance(MySQL)
+3. create username, Password, database name
+
+# Environment variables
+
+create environment variables for the following
+
+1. AWS ACCESS & SECRET keys
+2. RDS instance endpoint, username, password, port, database
+
+# Create database engine to connect to database
+
+1. install 'mysql-connector' package
+2. create engine object
+
+
+
 
 
 

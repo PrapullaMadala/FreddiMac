@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+from sqlalchemy import create_engine
 
 # accessing source data files
 file_list = []
@@ -29,12 +30,31 @@ columns = [
     'INTEREST_ONLY_INDICATOR'
     ]
 
-# creating dataframe with all the data from source dataset
+#creating dataframe with all the data from source dataset
 df = pd.DataFrame()
 for file in file_list:
     print(file)
     frame = pd.read_csv(file, sep='|', names=columns)
     df = df.append(frame, ignore_index=True)
+print(os.environ['SHELL'])
+print(os.environ.get('AWS_SECRET_ACCESS_KEY'))
+if "RDS_HOSTNAME" in os.environ:
+    print('true')
+
+print(dict(os.environ)['RDS_HOSTNAME'])
+# RDS (MySQL) Instance details
+try:
+    HOST = os.environ['RDS_HOSTNAME']
+    USER = os.environ['RDS_USERNAME']
+    PASSWORD = os.environ['RDS_PASSWORD']
+    PORT = os.environ['RDS_PORT']
+    DATABASE = os.environ['RDS_DB_NAME']
+except KeyError:
+    print('This Environment variable is not avilable')
 
 
+db = 'mysql+mysqlconnector://' + USER +':'+ PASSWORD + '@' + HOST + ':'+ PORT + '/' + DATABASE
+engine = create_engine(db)  
+print('engine name', engine)  
 
+df.to_sql(name='loans', con=engine, if_exists='replace', index=False, chunksize=100000)
