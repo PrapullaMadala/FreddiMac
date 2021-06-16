@@ -14,5 +14,11 @@ STEP2:(download and extract source dataset)
 
 STEP3:(create script for actual requirement)
 
+1. install 'pandas' framework
+2. create dataframe with all the data from *.txt files
+
+STEP4: (create engine using SQLALCHEMY)
+
+
 
 
